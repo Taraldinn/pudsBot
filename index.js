@@ -1,4 +1,5 @@
 require('dotenv').config();
+const fetch = require('node-fetch'); // Add this line
 const dis_token = process.env.DISCORD_TOKEN;
 
 const { Client, GatewayIntentBits, Events, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
@@ -22,6 +23,7 @@ let notifiedLastMinute = false; // Track if notification for last minute has bee
 
 client.once(Events.ClientReady, () => {
     console.log(`Logged in as ${client.user.tag}`);
+    keepAlive(); // Add this line to start the keep-alive mechanism
 });
 
 client.on(Events.MessageCreate, async (message) => {
@@ -136,6 +138,17 @@ function startTimer(channel) {
             await timerMessage.edit({ content: `${Math.floor(secondsRemaining / 60)}m ${secondsRemaining % 60}s remaining...` });
         }
     }, 1000);
+}
+
+function keepAlive() {
+    setInterval(async () => {
+        try {
+            await fetch('44.226.145.213'); // Replace with your server's URL
+            console.log('Keep-alive ping sent');
+        } catch (error) {
+            console.error('Error sending keep-alive ping:', error);
+        }
+    }, 5 * 60 * 1000); // Ping every 5 minutes
 }
 
 client.login(TOKEN);
