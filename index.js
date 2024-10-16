@@ -1,5 +1,4 @@
 require('dotenv').config();
-const fetch = require('node-fetch'); // Add this line
 const dis_token = process.env.DISCORD_TOKEN;
 
 const { Client, GatewayIntentBits, Events, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
@@ -140,15 +139,6 @@ function startTimer(channel) {
     }, 1000);
 }
 
-function keepAlive() {
-    setInterval(async () => {
-        try {
-            await fetch('44.226.145.213'); // Replace with your server's URL
-            console.log('Keep-alive ping sent');
-        } catch (error) {
-            console.error('Error sending keep-alive ping:', error);
-        }
-    }, 5 * 60 * 1000); // Ping every 5 minutes
-}
+
 
 client.login(TOKEN);
